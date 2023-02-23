@@ -1,5 +1,100 @@
 # CryptoTester Changelog
-**This program requires .NET Framework 4.6.1 or higher in order to run**
+**This program requires .NET Framework 4.7.2 or higher in order to run**
+
+## [1.6.0.0]
++ Updated target framework to .NET 4.7.2
++ Updated dependent libraries
++ Added HC-128 and HC-256 algorithms with unit tests
++ Added ChaCha20Poly1305 and XChaCha20Poly1305 algorithms
++ Added Rabbit algorithm
++ Added "GCMNoVerify" block mode for AES - performs AES-GCM without verifying the tag
++ Added ability to export RSA keys from RSA Calculator directly to the main window (as any supported format, including raw modulus/exponent)
++ Added import base64-encoded ASN.1 blob to Blob Analyzer
++ Added CALG_RSA_KEYX to Blob Generator
++ Added tooltip with hex numbers for Filesize texts
++ Added length display to input dialog boxes, including hex parsing if expecting bytes
++ Added "Lock Parameters" checkbox to not overwrite Offset/Length when loading files
++ Added secp128r1, secp256r1, secp384r1, and secp521r1 ECDH key exchanges as derive functions
++ Added HChaCha20 as derive function
++ Added option to view hash of input
++ Added option to Verify for encrypt/decrypt - e.g. verifying an ECDSA signature of the output
++ Added Operations -> Attempt Blind Decryption - crawls the Input and attempts to decrypt any valid block (only supports RSA algorithm currently)
++ Added detection of base64-encoded PEM and base64-ROT13-encoded PEM keys to Key Finder
++ Added detection of base64-encoded ASN.1 keys to Key Finder
++ RSA Calculator can now also calculate D using [N, P|Q, E], and fills the missing variables
++ Added Input -> Integer for accepting an integer (converts to bytes)
++ Added "ECC Validator" tool - supports secp*k1 and secp*r1 curve families, or custom parameters
++ Added ECPoint import and export to ECC Validator
++ Added PEM import to ECC Validator - will also automatically load curve parameters (if OID is defined)
++ Added CNG Blob import to ECC Validator - will also automatically load curve parameters (if valid magic)
++ Added "Scarab Ransomware" Base64 charset preset to Base Encoder
++ Added custom round and position support for ChaCha20 (RFC-7539) algorithm
++ Added progress bar for "Bruteforce Algorithm" operation
++ Added input IV from Base64 (Advanced -> IV)
++ Added "Recover IV From Plaintext" (Advanced -> IV), recovers the IV by XORing the ciphertext (Output) and your known plaintext
++ Added "Chunk Viewer" tool - allows viewing input as per-block chunks, with optional XOR filter
++ Added "Skip Chars" to RNG Tester
++ Added custom constant support for XXTEA algorithm
++ Added ASN.1 format support to Bruteforce Keys tool
++ Added "Reset Length" button to reset the File Options -> Length to the input's length
++ Added SHA-512/224 and SHA-512/256 hashes
++ Added OAEP_SHA512_224, OAEP_SHA512_256, OAEP_SHA3_256, and OAEP_SHA3_512 padding schemes (for RSA)
++ Added OAEP_SHA256_MFG1_SHA384, OAEP_SHA256_MFG1_SHA512, and OAEP_SHA384_MFG1_SHA512 padding schemes (for RSA)
++ Added support for RSA keys > 4096 bit
++ Added support for ECPoint formatted or raw byte private/public keys when using Elliptic Derive algorithms
++ Added SHA3 and Blake2b families of hash algorithms
++ Added XXHash and Murmur3 families of hash algorithms
++ Added Adler32 checksum and BlackMatter's custom hash algorithms
++ Added "Copy C Array" option for hex boxes (context menu or Ctrl+Shift+C)
++ Added "Copy BigNum" option for hex boxes (context menu)
++ Added "Chunks" mode for encrypt input bytes - define number of bytes to take and skip to encrypt/decrypt bytes in chunks (also works with "Splice Remaining Bytes" to interweave untouched bytes)
++ Added aPLib compression algorithm (only decompression supported for now)
++ Added "Reverse Input" button to Base Encoder
++ Added "LibSodium CryptoBox Easy" (crypto_box_easy / crypto_box_open_easy) algorithm - expects private_key|public_key for Key currently
++ Added "LibSodium CryptoBox Seal" (crypto_box_seal / crypto_box_seal_open) algorithm
++ Added detection of <RSAKeyPair> XML keys to Key Finder
++ Added detection of some NTRU keys (libntru format EES401EP2 and EES587EP1) to Key Finder
++ Added textbox for seed with hashes that support one (default is provided otherwise)
++ Fixed Sosemanuk unit test
++ Fixed Sosemanuk to accept derived keys
++ Fixed File Options -> Length to assume relative to end of input if parsed value is negative
++ Fixed output endianness of RSA Raw algorithm
++ Fixed hex output when generating a key in RSA Calculator
++ Fixed being able to export a blank/broken key when first opening RSA Calculator
++ Fixed XOR Analysis in Compare tab when not the whole file was encrypted
++ Fixed "To Hex" conversion in Hex Integer Converter when using commas and spaces
++ Fixed Bruteforce Algorithm operation selecting Custom padding mode (caused popup on each iteration)
++ Moved Bruteforce Algorithm operation to a background thread for better performance and UI responsiveness
++ Fixed export of key in RSA Calculator where N bitlength may be -1 from valid RSA bit lengths (e.g. 0x3FF or 0x7FF)
++ Fixed Cut operation on hex views
++ Fixed Base Encoder resetting dropdowns when it was opened multiple times
++ Fixed Key Finder to stop async task if dialog is closed
++ Fixed display of a repairable CNG key blob in Key Finder
++ Fixed unhelpful message on bad derive key length
++ Fixed compression under Compress/Decompress tab
++ Fixed crash in Key Finder with displaying an invalid CNG blob when it is a false-positive from the magic header
++ Fixed mis-reporting of key count in Key Finder when a false-positive is found (and suppressed)
++ Fixed bug with Reverse Input Bytes when input was empty
++ Fixed finding ASN.1 sequences with certain lengths in Key Finder
++ Fixed duplicate keys found with nested ASN.1 sequences in Key Finder
++ Fixed vague error with TEA algorithm and keys < 16 bytes (TEA exclusively will only use 16 bytes of any given key)
++ Fixed Little Endian mode for TEA algorithm when using an IV
++ Fixed "Flip Endianness" in RSA Calculator when value went negative
++ Fixed enumerating folder of CryptoAPI blobs in Bruteforce Keys tool
++ Fixed "Non NULL" expectation in Bruteforce Keys tool
++ Fixed RSA decryption of CryptoAPI-encrypted ciphertext when using OAEP_SHA256, OAEP_SHA384, or OAEP_SHA512 padding
++ Fixed RSA key PEM parsing when encoded newlines are present
++ Changed RSA Calculator form to allow for resizing
++ Changed output hash to update when dropdown changes
++ Expanded size of Algorithm, Hash, Derive, and Padding dropdowns to view full text better
++ Grouped Hashes for easier finding of algorithm
++ Grouped Derive functions for easier finding of algorithm
++ Grouped Padding modes for easier finding of algorithm
++ Renamed HMACSHA*, to respective PBDKF2* derive algorithms
++ Added real HMAC_MD5 and HMAC_SHA* derive algorithms
++ Operation -> "Generate Keystream" on the Encrypt/Decrypt tab can now generate a direct keystream to file (encrypt 0x00 bytes) for stream ciphers
++ RSA algorithm will now automatically decrypt in sequential chunks if total length is divisible by the modulus bitlength
+- Removed ECDH-ED25519 derive (misunderstanding, not actually a ECDH key exchange algorithm - it is an EdDSA signature algorithm)
 
 ## [1.5.0.0]
 + Key Finder:
