@@ -79,7 +79,7 @@ If `Splice Remaining Bytes` is ticked, then any bytes in the `Skip` section are 
 
 ### Input File Info
 
-This section display simple information about the `Input` such as the filesize, detected MIME (if it is a file), total entropy, and whether it is divisible by 16 (a common block size).
+This section displays simple information about the `Input` such as the filesize, detected MIME (if it is a file), total entropy, and whether it is divisible by 16 (a common block size).
 
 ### Misc
 
@@ -178,6 +178,8 @@ Examples of supported formats:
 ### RNG Tester
 
 A tool for testing various known PRNG algorithms.
+
+![RNG Tester](./readme/rng-tester.png)
 
 #### Seed Options
 
