@@ -24,11 +24,12 @@ Examples:
 * **Hex:** `x10` -> 16
 * **Input Length:** `len` -> 400
 * **Blocksize:** `block` -> 16 (blocksize of the selected algorithm)
-* **Nearest:** `near(60, 16)` -> 64
+* **Round Up:** `up(60, 16)` -> 64
+* **Round Down:** `down(60, 16)` -> 48
 
 Simple arithmetic can be used in combination with these functions.
 
-* `near(len-x100, b)` - Subtracts 256 from the input length, then rounds (up) to the nearest blocksize of the selected algorithm (e.g. 16 for AES)
+* `up(len-x100, b)` - Subtracts 256 from the input length, then rounds up to the nearest blocksize of the selected algorithm (e.g. 16 for AES)
 
 Any negative values are assumed to be `len - value`, aka relative to the end of the input.
 
@@ -42,7 +43,7 @@ The primary panel contains tools for using cryptographic primitives on an input.
 
 Allows for specifying a key in many formats, and contains options for many hashing and key derivation functions; these fields adapt to the currently selected algorithm and what it can support.
 
-> **Note:** The key is processed in the same order it is shown in the UI; first the key is decoded according to the `Format`, then hashed using the `Hash` parameters, and finally derived using the `Derive` parameters before handing it to the cryptographic algorithm.
+> **Note:** The key is processed in the same order it is shown in the UI; first the key is decoded according to the `Format`, then hashed using the `Hash` parameters, and finally derived using the `Derive` parameters before handing it to the cryptographic algorithm. As of v1.7.0.0, you can swap the order of `Hash` and `Derive` processing.
 
 The final output length of the key is displayed above the input box. Clicking this will display the final computed key in a separate dialog.
 
