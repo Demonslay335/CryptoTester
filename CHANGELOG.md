@@ -1,5 +1,75 @@
 # CryptoTester Changelog
-**This program requires .NET Framework 4.7.2 or higher in order to run**
+**This program requires .NET Framework 4.8.1 or higher in order to run**
+
+## TODO
+- Block mode support for Twofish, Threefish, maybe others (BouncyCastle engines)
+- NTRU algorithms
+
+## [1.7.0.0]
+Key Finder enhancements, new hashes and derive functions, etc.
+
+### Added
+- Progress bar to Key Finder
+- Curve25519 private key (base64) detection to Key Finder
+- secp256k1 and secp521r1 uncompressed ECPoint detection to Key Finder
+- ECDH PEM detection to Key Finder
+- ASCII for expected output of Bruteforce Keys
+- Inputs that accept integers now can use "up" (same as previous "near") and "down" functions to round respectively
+	`up(31, 16) == 32`
+	`down(31, 16) == 16`
+- New Byte Chart: click "Input" or "Output" labels to view respective byte frequencies
+- Haval family of hashes (Haval_128, Haval_160, Haval_192, Haval_224, Haval_256) that all accept rounds (3, 4, 5, 8)
+- CRC16-ARC and CRC16-MODBUS hashes
+- CHC hash (with AES and Blowfish ciphers) from LibTomCrypt
+- Button for swapping order of operations for Hash and Derive
+- Derive ECDH with secp Koblitz curves: secp160k1, secp192k1, secp224k1, secp256k1
+- Derive ECDH with secp Random curves: secp112r1, secp160r1, secp192r1, secp224r1
+- Derive ECDH with sect Koblitz curves: sect163k1, sect233k1, sect283k1, sect409k1, sect571k1
+- Derive ECDH with sect Random curves: sect163r2, sect233r1, sect283r1, sect409r1, sect571r1
+- Derive ECDH with X448
+- Derive ECDH with libsecp256k1 (from bitcoin-core)
+- Derive GHash (from Galois/Counter Mode)
+- Derive HMAC with Blake2b-256, Blake2b-512, Blake2s-128, and Blake2s-256
+- Derive Curve25519 can now accept private and public keys as PEM
+- Argon2 family of PBKDFs: Argon2i, Argon2d, Argon2id (Interactive, Moderate, Sensitive strengths based on LibSodium's parameters)
+- ECDH curves also show their NIST and ANSI X9.62/X9.63 aliases
+- ECDH curves can now accept raw little-endian private and public keys (automatically determined)
+- Derive ECDH curves can now accept ASN.1 keys (Format Hex or Base64)
+- Parsing and validation of BCRYPT_DH_PUBLIC_BLOB, BCRYPT_DH_PRIVATE_BLOB, BCRYPT_DSA_PUBLIC_BLOB, BCRYPT_DSA_PRIVATE_BLOB, BCRYPT_DSA_PUBLIC_BLOB_V2, and BCRYPT_DSA_PRIVATE_BLOB_V2 blobs
+- AES-CTR now supports Little Endian for the counter incrementer, and a custom position for the keystream
+- OAEP SHA3-224 and OAEP SHA3-384 padding modes for RSA
+- OAEP CHC (AES) padding mode for RSA
+- RSA algorithm can now accept Encoding Parameter (for OAEP padding modes)
+- Better descriptions for padding modes
+- Custom Position can now take a hex integer (prefix with "x")
+- Threefish (256, 512, and 1024) encryption algorithms
+- ECIES-DHAES (XOR-SHA-1) encryption algorithm (matches CryptoPP::ECIES<CryptoPP::ECP>)
+- LibSodium CryptoBox algorithms support "Attempt Blind Decryption" (the expected block size of the input is prompted)
+- Import ASN.1 blob (or base64 encode) to ECC Validator
+- ECC Validator can calculate the Y coordinate of a point when given just the X coordinate and the correct curve
+- Blake2s and Blake3 family of hash algorithms
+- Blake2b and Blake2s can now take an optional key
+- RBT (Residual Block Termination) Block Mode (for AES)
+
+### Changed
+- Updated target framework to .NET 4.8.1
+- Complete re-write of Key Finder to be more efficient and faster
+- Compare tab now draws bytes at an offset that does not exist in the other view as a difference (red)
+- Updated dependent libraries
+- Organized padding modes more
+- Blake2b and Blake2s moved to "Derive" to facilitate accepting a separate hash key
+
+### Fixed
+- Null value when selecting an input/output hash and input/output is empty
+- ECC Validator could not find a curve if the ECPoint had trailing null bytes
+- Input Hash and Input File Info did not update when using the "Move output to input" button
+- Key Finder could miss PEMs encoded inside JSON blobs due to escaped newline characters
+- Key Finder would stall on false positives for BCRYPT_DH_\* or BCRYPT_DSA_\* blobs
+- GCMNoVerify block mode would not encrypt/decrypt the last bytes not divisible by the block size correctly
+- Typo with MGF1 padding modes
+- Loading a file (via menu or drag-n-drop) to Input on the Compress/Decompress tab would not display the bytes
+- Wrong size of IV was generated for Sosemanuk if the IV field was left empty
+- ChaCha algorithm threw an index out of bounds error if using a 16-byte key
 
 ## [1.6.0.0]
 Mega update with **lots** of new features.
@@ -24,7 +94,7 @@ Mega update with **lots** of new features.
 - Detection of base64-encoded ASN.1 keys to Key Finder
 - RSA Calculator can now also calculate D using [N, P|Q, E], and fills the missing variables
 - Input -> Integer for accepting an integer (converts to bytes)
-- "ECC Validator" tool - supports secp*k1 and secp*r1 curve families, or custom parameters
+- "ECC Validator" tool - supports secp\*k1 and secp\*r1 curve families, or custom parameters
 - ECPoint import and export to ECC Validator
 - PEM import to ECC Validator - will also automatically load curve parameters (if OID is defined)
 - CNG Blob import to ECC Validator - will also automatically load curve parameters (if valid magic)
@@ -43,7 +113,7 @@ Mega update with **lots** of new features.
 - OAEP_SHA256_MFG1_SHA384, OAEP_SHA256_MFG1_SHA512, and OAEP_SHA384_MFG1_SHA512 padding schemes (for RSA)
 - Support for RSA keys > 4096 bit
 - Support for ECPoint formatted or raw byte private/public keys when using Elliptic Derive algorithms
-- SHA3 and Blake2b families of hash algorithms
+- SHA3, and Blake2b families of hash algorithms
 - XXHash and Murmur3 families of hash algorithms
 - Adler32 checksum and BlackMatter's custom hash algorithms
 - "Copy C Array" option for hex boxes (context menu or Ctrl+Shift+C)
@@ -56,7 +126,7 @@ Mega update with **lots** of new features.
 - Detection of <RSAKeyPair> XML keys to Key Finder
 - Detection of some NTRU keys (libntru format EES401EP2 and EES587EP1) to Key Finder
 - Textbox for seed with hashes that support one (default is provided otherwise)
-- Real HMAC_MD5 and HMAC_SHA* derive algorithms
+- Real HMAC_MD5 and HMAC_SHA\* derive algorithms
 - Operation -> "Generate Keystream" on the Encrypt/Decrypt tab can now generate a direct keystream to file (encrypt 0x00 bytes) for stream ciphers
 - RSA algorithm will now automatically decrypt in sequential chunks if total length is divisible by the modulus bitlength
 
@@ -69,7 +139,7 @@ Mega update with **lots** of new features.
 - Grouped Hashes for easier finding of algorithm
 - Grouped Derive functions for easier finding of algorithm
 - Grouped Padding modes for easier finding of algorithm
-- Renamed HMACSHA*, to respective PBDKF2* derive algorithms
+- Renamed HMACSHA\*, to respective PBDKF2\* derive algorithms
 
 ### Fixed
 - Fixed Sosemanuk unit test
