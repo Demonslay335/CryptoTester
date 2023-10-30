@@ -5,6 +5,40 @@
 - Block mode support for Twofish, Threefish, maybe others (BouncyCastle engines)
 - NTRU algorithms
 
+## Known Issues
+- Unable to use/import RSA private keys where P and Q are not the same bit length (e.g. RSA-512 with 256-bit P and 257-bit Q) - limitation with Microsoft CSP
+
+## [1.7.1.0]
+
+### Added
+- Key Finder can now find Base64-encoded XML, ECPoint, and NTRU keys
+- RSA Calculator can export ASN.1 and PEM explicitly as PKCS#1 or PKCS#8
+- Blob Analyzer can export ASN.1 and PEM explicitly as PKCS#1 or PKCS#8
+- GLIBC rand LFSR RNG algorithm
+- ARIA block cipher algorithm
+- "CryptProtectData (CurrentUser)" and "CryptProtectData (LocalMachine)" encryption algorithms from the CryptoAPI
+- ECIES-DHAES (AES-SHA-1) and ECIES-DHAES (Twofish-SHA-1) encryption algorithms
+- ECC Validator can generate public/private key pairs for the selected curve
+- Tiny-ECDH's incorrect implementation of ECDH as derive functions (K-163, B-163, K-233, B-233, K-283, B-283, K-409, B-409, K-571, and B-571)
+- "Reverse Endian (Bytes)", "Reverse Endian (Int32)", and "Reverse Endian (Int64)" context menu options to all hex boxes
+
+### Fixed
+- Handle text from copy/paste and inputs as ANSI instead of UTF-8
+- Base64 encoder in Base Encoder will now give the character and position of an invalid character
+- Parsing of PKCS#1 ASN.1/PEM keys
+- Encryption/Decryption with RSA and PKCS#1 ASN.1/PEM keys
+- Sizing issues with various dialogs and tools
+- Index Out of Bounds errors in Key Finder
+- "Copy C Array" and "Copy BigNum" context items were enabled even if nothing was selected
+
+### Changed
+- Enlarged text fields in Base Encoder
+- ECC Validator form can now be horizontally resized
+- "Copy C Array" on a hex box will now chunk the array with a new line every 16 bytes
+
+### Removed
+- "Reverse Input Bytes" from "Advanced", superseded by new context menu options on hexboxes
+
 ## [1.7.0.0]
 Key Finder enhancements, new hashes and derive functions, etc.
 
