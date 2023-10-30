@@ -9,10 +9,11 @@ A utility for playing with cryptography, geared towards ransomware analysis.
 All hex views used in CryptoTester offer a few enhanced capabilities.
 
 * Null bytes are colored a lighter gray
-* Bytes representing ASCII characters are colored orange
+* Bytes representing printable ASCII characters are colored orange
 * Newline patterns (`0D 0A`) are colored purple
 * If pasting is available, any whitespace, newlines, and common delimiters are removed before parsing as hex
 * Right-click options for copying bytes as a C Array or BigNum
+* Right-click options for reversing endianess as bytes, 32-bit integers, or 64-bit integers
 
 On many views (e.g. `Input` and `Output`), clicking on the offset row (the `00 01 02 03...` above the respective view) will open a dialog showing the bytes alongside the decoded view.
 
@@ -279,10 +280,6 @@ Options for the IV, such as inputting from text or base64, and recovering an IV 
 ### Presets
 
 Presets for certain encryption schemes, e.g. OpenSSL.
-
-### Reverse Input Bytes
-
-Simply reverses endianness of `Input`.
 
 ## Convert
 
