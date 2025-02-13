@@ -7,6 +7,36 @@
 
 ## Known Issues
 - Unable to use/import RSA private keys where P and Q are not the same bit length (e.g. RSA-512 with 256-bit P and 257-bit Q) - limitation with Microsoft CSP
+- When using a Derive function with the Sosemanuk algorithm, it will always output a 16-byte key
+
+## [1.7.2.0]
+
+### Added
+- KCipher-2 stream cipher algorithm
+- ZStd compression algorithm
+- Compression levels and Password for Compress/Decompress tab
+- Split XChaCha20 algorithm into Draft02 and Draft03 versions (initial counter 0x00 and 0x01 respectively) with unit tests
+- RSA Calculator and Blob Analyzer can export ASN.1 and PEM explicitly as "PKCS#8 (Legacy)" - an older draft of the spec where `parameters` was OMITTED instead of being explicitly `NULL`
+- RSA Calculator will highlight P and Q green if they are prime, or red if they are not prime
+- RSA Calculator will automatically calculate D when importing a BCRYPT_RSAPRIVATE_BLOB
+- "HC-256 (ECRYPT)" algorithm that matches the ECRYPT version (which was also CryptoPP::HC256's default implementation up to v8.9.0)
+- Curve25519 private key (hex string) detection to Key Finder
+- "Extra" button for Derive algorithms that need an extra field input
+- Derive algorithms for HKDF-MD5, HKDF-SHA1, HKDF-SHA256, and HKDF-SHA512
+- Derive algorithms for SipHash-2-4 and SipHash-4-8
+- Hash algorithms for Keccak-128, Keccak-224, Keccak-256, Keccak-288, Keccak-384, and Keccak-512
+- RNG algorithm JSF (Jenkins Small Fast, 32-bit)
+- Keystream Finder tool
+
+### Fixed
+
+- Bruteforce Keys will now skip empty lines in a file
+- RSA (Raw) implementation when processing input with leading 0x00 bytes
+- Legacy PKCS#8 (ASN.1 or PEM) RSA keys with the missing `parameters` field can now be imported
+- Internal construction and export of CryptoAPI blobs when a parameter is one byte less than expected
+
+### Changed
+- Reorganized XML, ASN.1, PEM options in various UIs
 
 ## [1.7.1.0]
 
@@ -21,6 +51,7 @@
 - ECC Validator can generate public/private key pairs for the selected curve
 - Tiny-ECDH's incorrect implementation of ECDH as derive functions (K-163, B-163, K-233, B-233, K-283, B-283, K-409, B-409, K-571, and B-571)
 - "Reverse Endian (Bytes)", "Reverse Endian (Int32)", and "Reverse Endian (Int64)" context menu options to all hex boxes
+- Format "Base64" under Key Options can now accept a base64-encoded ASN.1 key
 
 ### Fixed
 - Handle text from copy/paste and inputs as ANSI instead of UTF-8
